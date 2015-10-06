@@ -1,7 +1,7 @@
 # Portal Pro
 
 ## Overview
-Portal Pro is a Chrome Extension that improves the disoverability of list items in a excessively large dropdown list. Portal Pro uses the Select2 library to allow seaching and filtering of list items based name. It also displays an icon on any page when the extension is enabled.
+Portal Pro is a Chrome Extension that improves the disoverability of items in a large dropdown. Portal Pro uses the Select2 (https://select2.github.io/) library to allow seaching and filtering of list items based name. It also displays an icon on any page when the extension is enabled.
 
 ## Configuration
 
