@@ -9,7 +9,8 @@ Portal Pro is a Chrome Extension that improves the disoverability of list items 
 2. Clone this repo.
 3. In Chrome, open preferences.
 4. Enable developer mode.
-5. Select "load unpacked extensions" and navigate to cloned portal-pro directory.
-6. To use, visit admin portal page.
+5. Select "load unpacked extensions".
+6. Select cloned portal-pro directory.
+7. To use, visit admin portal page.
 
 
