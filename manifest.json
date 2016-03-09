@@ -1,6 +1,6 @@
 {
   "name": "Portal Pro",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 2,
   "description": "This extension improves the discoverability of lynda.com SSO portals.",
 
@@ -14,13 +14,13 @@
   "content_scripts":
       [
         {
-          "matches":["https://admin.lynda.com/admin/portalsetup.aspx"],
+          "matches":["*://*.lynda.com/admin/portalsetup.aspx"],
           "js":["library/jquery-2.1.4.min.js","library/select2.min.js"],
           "css":["library/select2.css"],
           "run_at": "document_start"
         },
         {
-          "matches":["https://admin.lynda.com/admin/portalsetup.aspx"],
+          "matches":["*://*.lynda.com/admin/portalsetup.aspx"],
           "js":["injection.js"],
           "run_at": "document_end"
         }
