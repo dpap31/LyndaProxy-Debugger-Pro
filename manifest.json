@@ -1,26 +1,20 @@
 {
-  "name": "Portal Pro",
-  "version": "0.0.2",
+  "name": "lyndaLibrary Proxy Pro",
+  "version": "0.0.1",
   "manifest_version": 2,
-  "description": "This extension improves the discoverability of lynda.com SSO portals.",
+  "description": "This extension improves the functionality of the lynda.com lyndaLibrary proxy test page.",
 
-  "icons": { "16": "icons/icon-16.png",
-             "48": "icons/icon-48.png",
-             "128": "icons/icon-144.png"
-             },
+  // "icons": { "16": "icons/icon-16.png",
+  //            "48": "icons/icon-48.png",
+  //            "128": "icons/icon-144.png"
+  //            },
   "background": {
      "scripts": ["background.js"]
    },
   "content_scripts":
       [
         {
-          "matches":["*://*.lynda.com/admin/portalsetup.aspx"],
-          "js":["library/jquery-2.1.4.min.js","library/select2.min.js"],
-          "css":["library/select2.css"],
-          "run_at": "document_start"
-        },
-        {
-          "matches":["*://*.lynda.com/admin/portalsetup.aspx"],
+          "matches":["http://172.18.123.223/test.html"],
           "js":["injection.js"],
           "run_at": "document_end"
         }
@@ -29,8 +23,8 @@
     "tabs"
   ],
   "page_action": {
-       "default_icon": "icons/icon-16.png",
-       "default_title": "Portal Pro"
+       // "default_icon": "icons/icon-16.png",
+       "default_title": "lyndaLibrary Proxy Pro"
      },
   "web_accessible_resources": ["library/select-2-icons/*"],
   "content_security_policy": "default-src 'none'; style-src 'self'; script-src 'self'"
