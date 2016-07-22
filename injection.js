@@ -4,17 +4,17 @@ $( document ).ready(function() {
 
   injectExtensionHtml();
   loadSavedConfigs();
-  configHoverEffect();
   loadConfigOnClick();
+  deleteConfigOnClick();
   saveConfig();
-
+  configHoverEffect();
 });
 
 function injectExtensionHtml(){
   // HTML Components
   var savePatronConfigBtn = "<input class='btn btn-success' type='button' id='savePatronConfig' value='Save'>"
   var saveSipConfigBtn = "<input class='btn btn-success' type='button' id='saveSipConfig' value='Save'>"
-  var savedConfigsPanel = "<div class='panel panel-success' id='savedConfigsPanel'><div class='panel-heading'><h4>Saved Configurations</h4></div><ul class='list-group'></ul></div>"
+  var savedConfigsPanel = "<div class='panel panel-success' id='savedConfigsPanel'><div class='panel-heading'><h4>Saved Configurations</h4></div><ul class='configs-list list-group'></ul></div>"
 
   // Add save button to forms
   $( "#patronApiFields > div:nth-child(10)" ).append(savePatronConfigBtn);
@@ -33,6 +33,15 @@ function loadConfigOnClick(){
     var hostname = $(".hostname", this).text()
     var savedForm = $.parseJSON(localStorage[hostname])
     fillInDebuggerForm(savedForm);
+  });
+}
+
+function deleteConfigOnClick(){
+  $(".delete").click(function(e){
+    var hostname = $(".hostname", $(this).parent()).text()
+    localStorage.removeItem(hostname);
+    $(this).parent().remove()
+    e.stopPropagation();
   });
 }
 
