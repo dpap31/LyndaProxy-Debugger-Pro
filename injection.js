@@ -1,24 +1,43 @@
-// HTML Components
-var savePatronConfigBtn = "<input class='btn btn-success' type='button' id='savePatronConfig' value='Save'>"
-var saveSipConfigBtn = "<input class='btn btn-success' type='button' id='saveSipConfig' value='Save'>"
-var savedConfigsPanel = "<div class='panel panel-success' id='savedConfigsPanel'><div class='panel-heading'><h4>Saved Configurations</h4></div><ul class='list-group'></ul></div>"
+
 
 $( document ).ready(function() {
+
+  injectExtensionHtml();
+  loadSavedConfigs();
+  configHoverEffect();
+  loadConfigOnClick();
+  saveConfig();
+
+});
+
+function injectExtensionHtml(){
+  // HTML Components
+  var savePatronConfigBtn = "<input class='btn btn-success' type='button' id='savePatronConfig' value='Save'>"
+  var saveSipConfigBtn = "<input class='btn btn-success' type='button' id='saveSipConfig' value='Save'>"
+  var savedConfigsPanel = "<div class='panel panel-success' id='savedConfigsPanel'><div class='panel-heading'><h4>Saved Configurations</h4></div><ul class='list-group'></ul></div>"
+
   // Add save button to forms
   $( "#patronApiFields > div:nth-child(10)" ).append(savePatronConfigBtn);
   $( "#sip2Fields > div:nth-child(15)" ).append(saveSipConfigBtn);
   $( "#response" ).append(savedConfigsPanel);
+}
 
-  // Load saved configs
+function loadSavedConfigs(){
   for ( var i = 0, len = localStorage.length; i < len; ++i ) {
     addSavedConfigToPanel( localStorage.key( i ), i );
   }
+}
 
-  loadConfigOnClick();
+function loadConfigOnClick(){
+  $(".config").click(function(){
+    var hostname = $(".hostname", this).text()
+    var savedForm = $.parseJSON(localStorage[hostname])
+    fillInDebuggerForm(savedForm);
+  });
+}
 
-  // On save
+function saveConfig() {
   $('#savePatronConfig, #saveSipConfig').click(function(){
-    alert("foo");
     var hostname = findActiveFormHostname()
     if (hostname === ""){
         $('#json').append("Invalid hostname.");
@@ -28,18 +47,24 @@ $( document ).ready(function() {
         addSavedConfigToPanel(hostname, savedConfigCount);
     }
   });
-});
+}
 
-function addSavedConfigToPanel(hostname, id){
-  var savedConfigHtml = "<li class='list-group-item config' id=" + id +">" + hostname +"</li>"
+function addSavedConfigToPanel( hostname, id ){
+  var deleteConfigBtn = "<button type='button' class='delete btn btn-danger btn-xs' style='display:none;'><span class='glyphicon glyphicon-remove'></span> Delete </button>"
+  var savedConfigHtml = "<li class='list-group-item config' id=" + id +">" + "<span class='hostname'>" + hostname + "</span>" + deleteConfigBtn + "</li>"
   $('#savedConfigsPanel').append(savedConfigHtml);
 }
 
-function loadConfigOnClick(){
-  $(".config").click(function(){
-    var hostname = $(this).text()
-    var savedForm = $.parseJSON(localStorage[hostname])
-    fillInDebuggerForm(savedForm);
+function configHoverEffect(){
+  $('.config').mouseover( function(){
+    $(this).css('cursor','pointer');
+    $(this).css('background-color','#f5f5f5');
+    $('.delete', this).css('float', 'right');
+    $('.delete', this).show();
+  });
+  $('.config').mouseout( function(){
+    $(this).css('background-color','#fff');
+    $('.delete', this).hide();
   });
 }
 
@@ -51,8 +76,8 @@ function captureDebuggerForm() {
   return JSON.stringify(values)
 }
 
-function fillInDebuggerForm(savedForm) {
-  $.each(savedForm, function(name, val){
+function fillInDebuggerForm( savedForm ) {
+  $.each(savedForm, function( name, val ){
     var $el = $('[name="'+name+'"]'),
         type = $el.attr('type');
 
@@ -67,7 +92,21 @@ function fillInDebuggerForm(savedForm) {
         $el.val(val);
     }
   });
+  toggleFormByPortalType( savedForm.portalType );
 }
+
+function toggleFormByPortalType( portalType ){
+  if (portalType === "Patron API"){
+    $("#patronApiFields").show();
+    $("#sip2Fields").hide();
+  } else if ( portalType === "SIP2" ){
+    $("#sip2Fields").show();
+    $("#patronApiFields").hide();
+  } else {
+    alert('portalType Error: Invalid Portal Type')
+  }
+}
+
 
 function findActiveFormHostname(){
   var isPatronFormHidden = $('#patronApiFields:visible').length == 0
