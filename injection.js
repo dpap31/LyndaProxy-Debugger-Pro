@@ -3,28 +3,31 @@ var savePatronConfigBtn = "<input class='btn btn-success' type='button' id='save
 var saveSipConfigBtn = "<input class='btn btn-success' type='button' id='saveSipConfig' value='Save'>"
 var savedConfigsPanel = "<div class='panel panel-success' id='savedConfigsPanel'><div class='panel-heading'><h4>Saved Configurations</h4></div><ul class='list-group'></ul></div>"
 
-// Add save button to forms
-$( "#patronApiFields > div:nth-child(10)" ).append(savePatronConfigBtn);
-$( "#sip2Fields > div:nth-child(15)" ).append(saveSipConfigBtn);
-$( "#response" ).append(savedConfigsPanel);
+$( document ).ready(function() {
+  // Add save button to forms
+  $( "#patronApiFields > div:nth-child(10)" ).append(savePatronConfigBtn);
+  $( "#sip2Fields > div:nth-child(15)" ).append(saveSipConfigBtn);
+  $( "#response" ).append(savedConfigsPanel);
 
-// Load saved configs
-for ( var i = 0, len = localStorage.length; i < len; ++i ) {
-  addSavedConfigToPanel( localStorage.key( i ), i );
-}
-loadConfigOnClick();
-
-// On save
-$('#savePatronConfig, #saveSipConfig').click(function(){
-  alert("foo");
-  var hostname = findActiveFormHostname()
-  if (hostname === ""){
-   $('#json').append("Invalid hostname.");
-  } else {
-   localStorage[hostname] = captureDebuggerForm();
-   var savedConfigCount = localStorage.length + 1
-   addSavedConfigToPanel(hostname, savedConfigCount);
+  // Load saved configs
+  for ( var i = 0, len = localStorage.length; i < len; ++i ) {
+    addSavedConfigToPanel( localStorage.key( i ), i );
   }
+
+  loadConfigOnClick();
+
+  // On save
+  $('#savePatronConfig, #saveSipConfig').click(function(){
+    alert("foo");
+    var hostname = findActiveFormHostname()
+    if (hostname === ""){
+        $('#json').append("Invalid hostname.");
+    } else {
+        localStorage[hostname] = captureDebuggerForm();
+        var savedConfigCount = localStorage.length + 1
+        addSavedConfigToPanel(hostname, savedConfigCount);
+    }
+  });
 });
 
 function addSavedConfigToPanel(hostname, id){

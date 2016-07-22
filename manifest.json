@@ -15,7 +15,7 @@
       [
         {
           "matches":["http://172.18.123.223/test.html"],
-          "js":["injection.js"],
+          "js":["library/jquery-2.1.4.min.js","injection.js"],
           "run_at": "document_end"
         }
       ],
