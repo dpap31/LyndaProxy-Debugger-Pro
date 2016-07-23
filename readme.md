@@ -11,6 +11,6 @@ LyndaProxy Debugger Pro is a Chrome Extension that allows users to save lyndaLib
 4. Enable developer mode.
 5. Select "load unpacked extensions".
 6. Select cloned LyndaProxy-Debugger-Pro directory.
-7. To use, visit admin portal page.
+7. To use, visit the LyndaProxy Debugger page.
 
 
